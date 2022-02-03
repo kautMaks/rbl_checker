@@ -101,7 +101,6 @@ BLISTS_IP4="
     dul.dnsbl.borderware.com
     dul.dnsbl.sorbs.net
     dul.pacifier.net
-    dunk.dnsbl.tuxad.de
     dyn.nszones.com
     dyn.rbl.polspam.pl
     dyna.spamrats.com
@@ -111,7 +110,6 @@ BLISTS_IP4="
     forbidden.icm.edu.pl
     free.v4bl.org
     gl.suomispam.net
-    hartkore.dnsbl.tuxad.de
     hil.habeas.com
     hog.blackhole.cantv.net
     http.dnsbl.sorbs.net
