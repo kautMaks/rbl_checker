@@ -5,6 +5,7 @@
 # The shell will strip multiple whitespace
 
 DNS="1.1.1.1"
+Abusix_API_key=""
 
 BLISTS_DOM="
     0spamurl.fusionzero.com

@@ -5,6 +5,11 @@
 # The shell will strip multiple whitespace
 
 DNS="1.1.1.1"
+ABUSIX_API_KEY=""
+
+ABUSIX_BLIST_IP4="
+    combined.mail.abusix.zone
+"
 
 BLISTS_IP4="
     0spam-n.fusionzero.com
@@ -262,6 +267,24 @@ fi
 REVERSE_DNS=$(dig +short -x $1 @${DNS})
 
 echo IP $1 NAME ${REVERSE_DNS:----}
+
+# -- cycle through the ipv4 Abusix blacklists
+if [ ! -z "${ABUSIX_API_KEY}" ]; then
+    for BL in ${ABUSIX_BLIST_IP4} ; do
+
+        # print the UTC date (without linefeed)
+        printf $(env TZ=UTC date "+%Y-%m-%d_%H:%M:%S_%Z")
+
+        # show the reversed IP and append the name of the blacklist
+        printf "%-40s" " ${reverse}.${BL}."
+
+        # use dig to lookup the name in the blacklist
+        # echo "$(dig +short -t a ${reverse}.${BL}. @${DNS} |  tr '\n' ' ')"
+        LISTED="$(dig +short -t a ${reverse}.${ABUSIX_API_KEY}.${BL}. @${DNS})"
+        echo ${LISTED:----}
+
+    done
+fi
 
 # -- cycle through the ipv4 blacklists
 for BL in ${BLISTS_IP4} ; do

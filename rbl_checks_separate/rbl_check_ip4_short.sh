@@ -5,6 +5,11 @@
 # The shell will strip multiple whitespace
 
 DNS="1.1.1.1"
+ABUSIX_API_KEY=""
+
+ABUSIX_BLIST_IP4="
+    combined.mail.abusix.zone
+"
 
 BLISTS_IP4="
     0spam-n.fusionzero.com
@@ -257,6 +262,19 @@ fi
 # In that case the test will be:
 #   [ "x" = "x" ]
 # This evaluates to true, so the script will call the ERROR function and quit
+
+# -- cycle through the ipv4 Abusix blacklists
+if [ ! -z "${ABUSIX_API_KEY}" ]; then
+    for BL in ${ABUSIX_BLIST_IP4} ; do
+        # use dig to lookup the name in the blacklist
+        # echo "$(dig +short -t a ${reverse}.${BL}. @${DNS} |  tr '\n' ' ')"
+        LISTED="$(dig +short -t a ${reverse}.${ABUSIX_API_KEY}.${BL}. @${DNS})"
+
+        if [ ! -z "${LISTED}" ]; then
+            echo ${BL}
+        fi
+    done
+fi
 
 # -- cycle through the ipv4 blacklists
 for BL in ${BLISTS_IP4} ; do
